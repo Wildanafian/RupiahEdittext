@@ -54,7 +54,16 @@ class RupiahEdittext : AppCompatEditText {
                     }
 
                     val formatted = if (rupiah) {
-                        if (parsed == 0.00) "" else NumberFormat.getCurrencyInstance(local).format(parsed)
+                        if (parsed == 0.00) "" else {
+                            NumberFormat.getCurrencyInstance(local).apply {
+                                maximumFractionDigits = 0
+                                isParseIntegerOnly = true
+                            }.format(parsed)
+//                            val formatter = NumberFormat.getCurrencyInstance(local)
+//                            formatter.maximumFractionDigits = 0
+//                            formatter.isParseIntegerOnly = true
+//                            formatter.format(parsed)
+                        }
                     } else {
                         if (parsed == 0.00) "" else NumberFormat.getIntegerInstance(Locale.GERMANY).format(parsed)
                     }
